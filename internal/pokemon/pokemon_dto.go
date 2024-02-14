@@ -1,12 +1,7 @@
 package pokemon
 
 import (
-	"net/url"
-	"strconv"
-	"strings"
-
 	"github.com/guregu/null"
-	"github.com/rs/zerolog/log"
 	"github.com/vnurhaqiqi/go-htmx-demo/external/pokeapi"
 )
 
@@ -16,27 +11,13 @@ type PokemonResponse struct {
 	Url  string `json:"url"`
 }
 
-func (p *PokemonResponse) SetIDFromUrl() {
-	parsedURL, err := url.Parse(p.Url)
-	if err != nil {
-		log.Warn().Err(err).Str("url", p.Url).Msg("error parse url")
-	}
-	// extract path from url
-	path := parsedURL.Path
-
-	// split path into segments
-	segments := strings.Split(path, "/")
-
-	id, _ := strconv.Atoi(segments[len(segments)-2])
-	p.ID = int64(id)
-}
-
 type PokemonDetail struct {
-	ID     int64        `json:"id"`
-	Name   string       `json:"name"`
-	Stats  []StatDetail `json:"stats"`
-	Height int64        `json:"height"`
-	Weight int64        `json:"weight"`
+	ID       int64        `json:"id"`
+	Name     string       `json:"name"`
+	Stats    []StatDetail `json:"stats"`
+	Height   int64        `json:"height"`
+	Weight   int64        `json:"weight"`
+	ImageUrl string       `json:"imageUrl"`
 }
 
 type StatDetail struct {
@@ -69,7 +50,6 @@ func NewPokemonResponseFromResult(result pokeapi.Pokemons) []PokemonResponse {
 			Name: res.Name,
 			Url:  res.Url,
 		}
-		pokemon.SetIDFromUrl()
 
 		pokemonResponses = append(pokemonResponses, pokemon)
 	}
@@ -89,10 +69,11 @@ func NewPokemonDetailResponseFromResult(result pokeapi.PokemonDetailResponse) Po
 	}
 
 	return PokemonDetail{
-		ID:     result.ID,
-		Name:   result.Name,
-		Height: result.Height,
-		Weight: result.Weight,
-		Stats:  stats,
+		ID:       result.ID,
+		Name:     result.Name,
+		Height:   result.Height,
+		Weight:   result.Weight,
+		Stats:    stats,
+		ImageUrl: result.Sprites.Other.OfficialArtWork.FrontDefault,
 	}
 }

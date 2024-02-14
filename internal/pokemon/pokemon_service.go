@@ -9,7 +9,7 @@ import (
 
 type PokemonService interface {
 	ResolvePokemonByFilter(ctx context.Context, filter PokemonFilter) (resp []PokemonResponse, err error)
-	ResolvePokemonDetailByID(ctx context.Context, id int64) (resp PokemonDetail, err error)
+	ResolvePokemonDetailByName(ctx context.Context, name string) (resp PokemonDetail, err error)
 }
 
 type PokemonServiceImpl struct {
@@ -43,10 +43,10 @@ func (s *PokemonServiceImpl) ResolvePokemonByFilter(ctx context.Context, filter 
 	return
 }
 
-func (s *PokemonServiceImpl) ResolvePokemonDetailByID(ctx context.Context, id int64) (resp PokemonDetail, err error) {
-	pokemon, err := s.PokeApiClient.GetPokemonByID(id)
+func (s *PokemonServiceImpl) ResolvePokemonDetailByName(ctx context.Context, name string) (resp PokemonDetail, err error) {
+	pokemon, err := s.PokeApiClient.GetPokemonByName(name)
 	if err != nil {
-		log.Error().Err(err).Int("id", int(id)).Msg("[ResolvePokemonDetailByID]")
+		log.Error().Err(err).Str("name", name).Msg("[ResolvePokemonDetailByName]")
 		return
 	}
 

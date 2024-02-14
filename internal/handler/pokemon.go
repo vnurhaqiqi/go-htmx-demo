@@ -1,8 +1,6 @@
 package handler
 
 import (
-	"strconv"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/guregu/null"
 	"github.com/rs/zerolog/log"
@@ -21,16 +19,6 @@ func ProvidePokemonHandler(pokemonService pokemon.PokemonService) *PokemonHandle
 	}
 }
 
-// TODO: provide search pokemon
-func (h *PokemonHandler) SearchPokemon(c *fiber.Ctx) error {
-	var filter pokemon.PokemonFilter
-
-	limit, _ := strconv.Atoi(c.Query("limit"))
-	filter.Limit = null.IntFrom(int64(limit))
-
-	return c.Render("pokemon_results", fiber.Map{"Results": "OK"})
-}
-
 func (h *PokemonHandler) Home(c *fiber.Ctx) error {
 	resp, err := h.PokemonService.ResolvePokemonByFilter(c.Context(), pokemon.PokemonFilter{
 		Limit: null.IntFrom(100),
@@ -44,12 +32,24 @@ func (h *PokemonHandler) Home(c *fiber.Ctx) error {
 	return c.Render("index", fiber.Map{"Results": resp})
 }
 
-func (h *PokemonHandler) Detail(c *fiber.Ctx) error {
-	id, _ := strconv.Atoi(c.Params("id"))
+func (h *PokemonHandler) SearchByName(c *fiber.Ctx) error {
+	name := c.FormValue("name")
 
-	resp, err := h.PokemonService.ResolvePokemonDetailByID(c.Context(), int64(id))
+	resp, err := h.PokemonService.ResolvePokemonDetailByName(c.Context(), name)
 	if err != nil {
-		log.Error().Err(err).Msg("[Detail]")
+		log.Error().Err(err).Msg("[SearchByName]")
+		return c.Render("pokemon_not_found", fiber.Map{})
+	}
+
+	return c.Render("pokemon_detail", fiber.Map{"Result": resp})
+}
+
+func (h *PokemonHandler) GetByName(c *fiber.Ctx) error {
+	name := c.Params("name")
+
+	resp, err := h.PokemonService.ResolvePokemonDetailByName(c.Context(), name)
+	if err != nil {
+		log.Error().Err(err).Msg("[SearchByName]")
 		return err
 	}
 

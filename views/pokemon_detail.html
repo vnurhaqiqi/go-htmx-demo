@@ -1,12 +1,12 @@
 <div class="card mb-3">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <button type="button" class="close" aria-label="Close" hx-get="/">
-            <span aria-hidden="true">&times;</span> Close nya juga belum jalan
+        <button type="button" class="close" aria-label="Close" hx-get="/" hx-target="#home-page" hx-swap="outerHTML">
+            <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="row no-gutters">
         <div class="col-md-4">
-            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{.Result.ID}}.png"
+            <img src="{{.Result.ImageUrl}}"
                 class="card-img-top" alt="Pokemon Sprite">
         </div>
         <div class="col-md-4">

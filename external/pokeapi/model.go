@@ -12,11 +12,12 @@ type Pokemon struct {
 type Pokemons []Pokemon
 
 type PokemonDetailResponse struct {
-	ID     int64        `json:"id"`
-	Name   string       `json:"name"`
-	Stats  []StatDetail `json:"stats"`
-	Height int64        `json:"height"`
-	Weight int64        `json:"weight"`
+	ID      int64        `json:"id"`
+	Name    string       `json:"name"`
+	Stats   []StatDetail `json:"stats"`
+	Height  int64        `json:"height"`
+	Weight  int64        `json:"weight"`
+	Sprites Sprites      `json:"sprites"`
 }
 
 type StatDetail struct {
@@ -42,4 +43,16 @@ type PokemonListResponse struct {
 
 func (p PokemonListResponse) GetResult() Pokemons {
 	return p.Results
+}
+
+type Sprites struct {
+	Other Other `json:"other"`
+}
+
+type Other struct {
+	OfficialArtWork OfficialArtWork `json:"official-artwork"`
+}
+
+type OfficialArtWork struct {
+	FrontDefault string `json:"front_default"`
 }

@@ -23,10 +23,10 @@ func (s *Server) Initialized() {
 	app := fiber.New(fiber.Config{Views: engine})
 
 	app.Get("/", s.PokemonHandler.Home)
-	app.Get("/pokemon/:id", s.PokemonHandler.Detail)
-	
-	// TODO:
-	// app.Get("/search", s.PokemonHandler.SearchPokemon)
+
+	pokemon := app.Group("/pokemon")
+	pokemon.Post("/search", s.PokemonHandler.SearchByName)
+	pokemon.Get("/search/:name", s.PokemonHandler.GetByName)
 
 	err := app.Listen(":3000")
 	if err != nil {
