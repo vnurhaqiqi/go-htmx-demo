@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Wiki</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTMX JS -->
+    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1>Pokemon Wiki</h1>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search belum bisa dipake.." aria-label="Search"
+                        aria-describedby="button-addon2" hx-get="/search?limit=5" hx-trigger="keyup delay:500ms">
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3 justify-content-center">
+            <div class="col-md-6" id="search-results">
+                <div class="list-group" id="list-results">
+                    {{ range .Results}}
+                    <a href="#" class="list-group-item list-group-item-action text-capitalize" hx-get="/pokemon/{{.ID}}"
+                        hx-trigger="click" hx-target="#list-results" hx-swap="outerHTML">{{.Name}}</a>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (Optional, for some interactive components) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
