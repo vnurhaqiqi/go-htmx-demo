@@ -1,6 +1,9 @@
 # GO HTMX Demo
 
-This project demonstrates the simply way to use Go and HTXM and integrate with the PokeAPI to retrieve information about Pokémon, including their height, weight, and other attributes.
+This project demonstrates the simple way to use Go and HTXM and integrate with the PokeAPI to retrieve information about Pokémon, including their height, weight, and other attributes.
+
+![Pokemon-Wiki1-ezgif com-video-to-gif-converter](https://github.com/vnurhaqiqi/go-htmx-demo/assets/32282290/600ef5b3-5515-4215-941b-7831dff7cb6a)
+
 
 ## Getting Started
 
@@ -40,4 +43,4 @@ Before running the project, make sure you have the following installed:
 Contributions are welcome! Please feel free to submit pull requests or open issues if you find any bugs or have suggestions for improvements.
 
 ## Acknowledgments
-Thanks to the creators of the PokeAPI for providing the data used in this project.
+Thanks to the creators of the [PokeAPI](https://pokeapi.co/) for providing the data used in this project.
